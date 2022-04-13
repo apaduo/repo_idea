@@ -1,15 +1,17 @@
 package com.lagou.service.impl;
 
 import com.lagou.dao.RoleMapper;
-import com.lagou.domain.Role;
-import com.lagou.domain.RoleMenuVO;
-import com.lagou.domain.Role_menu_relation;
+import com.lagou.domain.*;
 import com.lagou.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -51,5 +53,45 @@ public class RoleServiceImpl implements RoleService {
 
         //2.删除角色
         roleMapper.deleteRole(roleId);
+    }
+
+    @Override
+    public List<ResourceCategory> findResourceListByRoleId(Integer roleId) {
+        List<ResourceCategory> resourceCategories = new ArrayList<ResourceCategory>();
+        List<ResourceCategory> resourceCategoryList = new ArrayList<ResourceCategory>();
+        //查询角色对应的资源信息
+        List<Resource> resourceListByRoleId = roleMapper.findResourceListByRoleId(roleId);
+        for (Resource resource : resourceListByRoleId) {
+            ResourceCategory resourceCategory = roleMapper.findResourceCategoryByResourceId(resource.getCategoryId());
+            resourceCategories.add(resourceCategory);
+        }
+        //去重
+        resourceCategoryList = resourceCategories.stream().distinct().collect(Collectors.toList());
+        for (ResourceCategory resourceCategory : resourceCategoryList) {
+            ArrayList<Resource> resourceList = new ArrayList<Resource>();
+            for (Resource resource : resourceListByRoleId) {
+                if (resource.getCategoryId().equals(resourceCategory.getId())){
+                    resourceList.add(resource);
+                }
+            }
+            resourceCategory.setResourceList(resourceList);
+        }
+        return resourceCategoryList;
+    }
+
+    @Override
+    public void roleContextResource(RoleResourceVO roleResourceVO) {
+        roleMapper.deleteRoleResourceRelationByRoleId(roleResourceVO.getRoleId());
+        Date date = new Date();
+        for (Integer integer : roleResourceVO.getResourceIdList()) {
+            RoleResourceRelation roleResourceRelation = new RoleResourceRelation();
+            roleResourceRelation.setRoleId(roleResourceVO.getRoleId());
+            roleResourceRelation.setResourceId(integer);
+            roleResourceRelation.setUpdatedTime(date);
+            roleResourceRelation.setCreatedTime(date);
+            roleResourceRelation.setCreatedBy("system");
+            roleResourceRelation.setUpdatedBy("system");
+            roleMapper.saveRoleResourceRelation(roleResourceRelation);
+        }
     }
 }

@@ -35,4 +35,46 @@
     <delete id="deleteRole" parameterType="int">
         delete from roles where id = #{roleId};
     </delete>
+    
+    <!--根据角色Id查询资源信息-->
+    <select id="findResourceListByRoleId" parameterType="int"
+            resultType="com.lagou.domain.Resource">
+        select * from resource r
+        inner join role_resource_relation rr
+        on r.id = rr.resource_id
+        where rr.role_id = #{roleId};
+    </select>
+    
+    <!--根据资源信息ID查询资源分类信息-->
+    <select id="findResourceCategoryByResourceId" parameterType="int"
+            resultType="com.lagou.domain.ResourceCategory">
+        select * from resource_category
+        where id = #{resourceCategoryId}
+    </select>
+    <!--根据角色ID删除角色与资源的关联关系-->
+    <delete id="deleteRoleResourceRelationByRoleId" parameterType="int">
+        delete from role_resource_relation
+        where role_id = #{roleId}
+    </delete>
+
+    <!--为角色分配资源-->
+    <insert id="saveRoleResourceRelation" parameterType="com.lagou.domain.RoleResourceRelation">
+        insert into role_resource_relation(
+            id,
+            resource_id,
+            role_id,
+            created_time,
+            updated_time,
+            created_by,
+            updated_by
+        )values(
+            null,
+            #{resourceId},
+            #{roleId},
+            #{createdTime},
+            #{updatedTime},
+            #{createdBy},
+            #{updatedBy}
+        )
+    </insert>
 </mapper>

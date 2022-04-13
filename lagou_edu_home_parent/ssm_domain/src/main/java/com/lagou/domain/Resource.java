@@ -1,6 +1,7 @@
 package com.lagou.domain;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Resource {
 
@@ -100,5 +101,26 @@ public class Resource {
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedBy='" + updatedBy + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Resource resource = (Resource) o;
+        return Objects.equals(id, resource.id) &&
+                Objects.equals(name, resource.name) &&
+                Objects.equals(url, resource.url) &&
+                Objects.equals(categoryId, resource.categoryId) &&
+                Objects.equals(description, resource.description) &&
+                Objects.equals(createdTime, resource.createdTime) &&
+                Objects.equals(updatedTime, resource.updatedTime) &&
+                Objects.equals(createdBy, resource.createdBy) &&
+                Objects.equals(updatedBy, resource.updatedBy);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, url, categoryId, description, createdTime, updatedTime, createdBy, updatedBy);
     }
 }
