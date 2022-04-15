@@ -3,7 +3,6 @@ package com.lagou.controller;
 import com.lagou.domain.*;
 import com.lagou.service.MenuService;
 import com.lagou.service.RoleService;
-import com.mysql.fabric.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,5 +77,19 @@ public class RoleController {
     public ResponseResult roleContextResource(@RequestBody RoleResourceVO roleResourceVO){
         roleService.roleContextResource(roleResourceVO);
         return new ResponseResult(true,200,"为角色分配资源菜单成功",null);
+    }
+    /*
+        新增&修改角色信息
+     */
+    @RequestMapping("/saveOrUpdateRole")
+    public ResponseResult saveOrUpdateRole(@RequestBody Role role){
+       if (role.getId() != null){
+           roleService.updateRole(role);
+           return new ResponseResult(true,200,"角色信息更新成功",null);
+       }else{
+           roleService.saveRole(role);
+           return new ResponseResult(true,200,"角色信息保存成功",null);
+
+       }
     }
 }

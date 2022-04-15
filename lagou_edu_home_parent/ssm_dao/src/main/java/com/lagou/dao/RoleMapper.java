@@ -42,4 +42,12 @@ public interface RoleMapper {
         插入最新的关联关系
      */
     public void saveRoleResourceRelation(RoleResourceRelation roleResourceRelation);
+    /*
+        添加角色
+     */
+    public void saveRole(Role role);
+    /*
+        修改角色
+     */
+    public void updateRole(Role role);
 }

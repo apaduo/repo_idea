@@ -77,4 +77,36 @@
             #{updatedBy}
         )
     </insert>
+    <!--添加角色-->
+    <insert id="saveRole" parameterType="com.lagou.domain.Role">
+        insert into roles(
+            id,
+            code,
+            name,
+            description,
+            created_time,
+            updated_time,
+            created_by,
+            updated_by
+        )values(
+            null,
+            #{code},
+            #{name},
+            #{description},
+            #{createdTime},
+            #{updatedTime},
+            #{createdBy},
+            #{updatedBy}
+        )
+    </insert>
+    <!--更新角色-->
+    <update id="updateRole" parameterType="com.lagou.domain.Role">
+        update roles set
+        code = #{code},
+        name = #{name},
+        description = #{description},
+        updated_time = #{updatedTime},
+        updated_by = #{updatedBy}
+        where id = #{id};
+    </update>
 </mapper>

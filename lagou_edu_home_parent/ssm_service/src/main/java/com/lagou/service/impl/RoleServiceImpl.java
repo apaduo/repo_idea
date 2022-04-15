@@ -94,4 +94,21 @@ public class RoleServiceImpl implements RoleService {
             roleMapper.saveRoleResourceRelation(roleResourceRelation);
         }
     }
+
+    @Override
+    public void saveRole(Role role) {
+        Date date = new Date();
+        role.setCreatedTime(date);
+        role.setCreatedBy("system");
+        role.setUpdatedTime(date);
+        role.setUpdatedBy("system");
+        roleMapper.saveRole(role);
+    }
+
+    @Override
+    public void updateRole(Role role) {
+        role.setUpdatedBy("system");
+        role.setUpdatedTime(new Date());
+        roleMapper.updateRole(role);
+    }
 }
