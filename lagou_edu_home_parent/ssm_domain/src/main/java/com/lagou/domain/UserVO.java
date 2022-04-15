@@ -23,6 +23,16 @@ public class UserVO {
 
     private Integer userId;
 
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public List<Integer> getRoleIdList() {
         return roleIdList;
     }

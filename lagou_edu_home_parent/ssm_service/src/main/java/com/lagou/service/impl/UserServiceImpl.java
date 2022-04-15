@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setId(id);
         user.setUpdateTime(new Date());
+        if (status.equals("ENABLE")){
+            status = "DISABLE";
+        }else{
+            status = "ENABLE";
+        }
         user.setStatus(status);
 
         userMapper.updateUserStatus(user);

@@ -22,7 +22,7 @@
 
     <!--更新用户状态信息-->
     <update id="updateUserStatus" parameterType="com.lagou.domain.User">
-        update user set status = #{status},update_time = #{update_time} where id = #{id};
+        update user set status = #{status},update_time = #{updateTime} where id = #{id};
     </update>
     
     <!--根据用户名查询用户-->
