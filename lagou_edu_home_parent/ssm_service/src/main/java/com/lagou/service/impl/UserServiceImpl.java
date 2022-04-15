@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public void updateUserStatus(Integer id, String status) {
         User user = new User();
         user.setId(id);
-        user.setUpdate_time(new Date());
+        user.setUpdateTime(new Date());
         user.setStatus(status);
 
         userMapper.updateUserStatus(user);
