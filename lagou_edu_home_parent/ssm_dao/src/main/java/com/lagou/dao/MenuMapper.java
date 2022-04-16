@@ -19,4 +19,12 @@ public interface MenuMapper {
         根据ID查询菜单信息
      */
     public Menu findMenuById(Integer id);
+    /*
+        添加菜单信息
+     */
+    public void saveMenu(Menu menu);
+    /*
+        修改菜单信息
+     */
+    public void updateMenu(Menu menu);
 }

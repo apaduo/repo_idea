@@ -1,9 +1,11 @@
 package com.lagou.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.lagou.domain.Menu;
 import com.lagou.domain.ResponseResult;
 import com.lagou.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +22,9 @@ public class MenuController {
         查询所有菜单
      */
     @RequestMapping("/findAllMenu")
-    public ResponseResult findAllMenu(){
-        List<Menu> allMenu = menuService.findAllMenu();
-        return new ResponseResult(true,200,"查询所有菜单成功",allMenu);
+    public ResponseResult findAllMenu(Integer currentPage,Integer pageSize){
+        PageInfo pageInfo = menuService.findAllMenu(currentPage,pageSize);
+        return new ResponseResult(true,200,"查询所有菜单成功",pageInfo);
     }
 
     /*
@@ -49,5 +51,18 @@ public class MenuController {
             return new ResponseResult(true,200,"更新回显成功",map);
         }
 
+    }
+    /*
+        新增&更新菜单信息
+     */
+    @RequestMapping("/saveOrUpdateMenu")
+    public ResponseResult saveOrUpdateMenu(@RequestBody Menu menu){
+        if (menu.getId() != null){
+            menuService.updateMenu(menu);
+            return new ResponseResult(true,200,"更新菜单信息成功",null);
+        }else{
+            menuService.saveMenu(menu);
+            return new ResponseResult(true,200,"新建菜单信息成功",null);
+        }
     }
 }

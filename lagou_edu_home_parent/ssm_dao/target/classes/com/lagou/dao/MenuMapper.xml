@@ -6,8 +6,8 @@
         <id property="id" column="id"/>
         <result property="parentId" column="parent_id"/>
         <result property="href" column="href"/>
-        <result property="icon" column=""/>
-        <result property="name" column="parent_id"/>
+        <result property="icon" column="icon"/>
+        <result property="name" column="name"/>
         <result property="description" column="description"/>
         <result property="orderNum" column="order_num"/>
         <result property="shown" column="shown"/>
@@ -28,11 +28,60 @@
     </select>
     <!--查询所有菜单信息-->
     <select id="findAllMenu" resultType="com.lagou.domain.Menu">
-        select * from menu;
+        select * from menu
     </select>
 
     <!--根据Id查询菜单信息-->
     <select id="findMenuById" parameterType="int" resultType="com.lagou.domain.Menu">
         select * from menu where  id = #{id};
     </select>
+
+    <!--添加菜单信息-->
+    <insert id="saveMenu" parameterType="com.lagou.domain.Menu">
+        insert into menu(
+            id,
+            parent_id,
+            href,
+            icon,
+            name,
+            description,
+            order_num,
+            shown,
+            level,
+            created_time,
+            updated_time,
+            created_by,
+            updated_by
+        )values(
+            null,
+            #{parentId},
+            #{href},
+            #{icon},
+            #{name},
+            #{description},
+            #{orderNum},
+            #{shown},
+            #{level},
+            #{createdTime},
+            #{updatedTime},
+            #{createdBy},
+            #{updatedBy}
+        )
+    </insert>
+
+    <!--更新菜单信息-->
+    <update id="updateMenu" parameterType="com.lagou.domain.Menu">
+        update menu set
+            parent_id = #{parentId},
+            href = #{href},
+            icon = #{icon},
+            name = #{name},
+            description = #{description},
+            order_num = #{orderNum},
+            shown = #{shown},
+            level = #{level},
+            updated_time = #{updatedTime},
+            updated_by = #{updatedBy}
+        where id = #{id}
+    </update>
 </mapper>

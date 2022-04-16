@@ -20,4 +20,40 @@
 
         </where>
     </select>
+
+    <!--添加资源信息-->
+    <insert id="saveResource" parameterType="com.lagou.domain.Resource">
+        insert into resource(
+            id,
+            name,
+            url,
+            category_id,
+            description,
+            created_time,
+            updated_time,
+            created_by,
+            updated_by
+        )values(
+            null,
+            #{name},
+            #{url},
+            #{categoryId},
+            #{description},
+            #{createdTime},
+            #{updatedTime},
+            #{createdBy},
+            #{updatedBy}
+        )
+    </insert>
+    <!--更新资源信息-->
+    <update id="updateResource" parameterType="com.lagou.domain.Resource">
+        update resource set
+        name = #{name},
+        url = #{url},
+        category_id = #{categoryId},
+        description = #{description},
+        updated_time = #{updatedTime},
+        updated_by = #{updatedBy}
+        where id = #{id};
+    </update>
 </mapper>
